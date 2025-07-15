@@ -1,4 +1,7 @@
-BOT_TOKEN = '7945574839:AAFlscEmaPHBDS0F_OxpHdq6bFbGbvpctZc'
+import os
+
+BOT_TOKEN = os.getenv('BOT_TOKEN')  # <-- вот так правильно!
+
 
 ADMINS = [
     5090453986,  # пока можешь вставить свой user_id
