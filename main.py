@@ -29,7 +29,7 @@ TRANSLATIONS = {
     },
     "qq": {
         "select_language": "Tildi tańlań:",
-        "full_name": "Tolıq atıńızdı kiritiń (F.A.Ə):",
+        "full_name": "Tolıq atıńızdı kiritiń (F.A.Ɔ):",
         "age": "Jasıńızdı kiritiń:",
         "invalid_age": "Iltimas, dúrís jasta kíríziń.",
         "resume": "Iltimas, rezyumeni jiberiń (PDF, DOCX hám t.b):",
@@ -38,7 +38,7 @@ TRANSLATIONS = {
         "phone": "Telefon nomerińizdi jiberiń yaki túymeni basıń:",
         "vacancy": "Vakansiyani tańlań:",
         "submit": "Jiberiw",
-        "submitted": "Raxmet! Arızańız jiberildi.",
+        "submitted": "Raxmet! Arızańiz jiberildi.",
         "cancel": "Sóylesiw toqtaldi. /start menen qayta baslań."
     },
     "ru": {
@@ -64,7 +64,7 @@ menu_commands = ReplyKeyboardMarkup([["/start", "/cancel"]], resize_keyboard=Tru
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [[KeyboardButton(lang)] for lang in languages]
     await update.message.reply_text(
-        "Tilni tanlang / Выберите язык / Тилди таńлаń:",
+        "Tilni tanlang / Выберите язык / Tildi tańlań:",
         reply_markup=ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
     )
     return LANGUAGE
@@ -133,12 +133,12 @@ async def get_vacancy(update: Update, context: ContextTypes.DEFAULT_TYPE):
     for admin in ADMINS:
         try:
             await context.bot.send_document(admin, document=context.user_data['resume'], caption=message)
-        except:
-            pass
+        except Exception as e:
+            print(f"Error sending to admin {admin}: {e}")
     try:
         await context.bot.send_document(GROUP_ID, document=context.user_data['resume'], caption=message)
-    except:
-        pass
+    except Exception as e:
+        print(f"Error sending to group: {e}")
     await update.message.reply_text(TRANSLATIONS[lang]['submitted'], reply_markup=menu_commands)
     return ConversationHandler.END
 
@@ -171,6 +171,7 @@ if __name__ == '__main__':
 
     print("Bot running...")
     app.run_polling()
+
 
 
 # from telegram import (
